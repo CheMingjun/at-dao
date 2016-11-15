@@ -3,7 +3,7 @@
     "optionalDependencies": {},
     "readme": "README.md",
     "scripts": {},
-    "version": "1.0.4",
+    "version": "1.0.5",
     "dependencies": {
         "at-js": "^1.1.8",
         "co": "4.6.0",
