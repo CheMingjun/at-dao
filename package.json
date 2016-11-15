@@ -3,14 +3,16 @@
     "optionalDependencies": {},
     "readme": "README.md",
     "scripts": {},
-    "version": "1.0.3",
+    "version": "1.0.4",
     "dependencies": {
         "at-js": "^1.1.8",
         "co": "4.6.0",
         "mysql": "2.10.2"
     },
     "description": "README.md",
-    "devDependencies": {},
+    "devDependencies": {
+        "at-test": ">=1.0.5"
+    },
     "main": "./index",
     "maintainers": [
         {

@@ -6,16 +6,22 @@
 /**
  * define a file annotations
  */
-const LibName = 'at-dao';
+const LibName = 'at-dao',DefDSName = 'default';
 require('at-js').define('dao', {
     scope: 'var', build: function (_ctx, _argAry) {
-        return 'return require("'+LibName+'/lib/ds").dao(_dao_mapping_||null)';
+        return "return (typeof(_dao_)!=='undefined'?_dao:require('" + LibName + "/lib/ds').dao)(typeof(_dao_mapping_)==='object'?_dao_mapping_:null)";
     }
 }).define('dao.\\S+', {
     scope: 'file', build: function () {
         var columns = [];
         return {
             which: {
+                'dao.proxy': function (_ctx, _argAry) {
+                    return "return require('" + LibName + "/lib/ds').proxy(typeof(_dao_mapping_)==='object'?_dao_mapping_:null,arguments.length>0?arguments[0]:null);";
+                },
+                'dao.bat': function (_ctx, _argAry) {
+                    return "return require('" + LibName + "/lib/ds').bat.apply(null,Array.prototype.slice.call(arguments));";
+                },
                 'dao.column': function (_ctx, _argAry) {
                     var paramName = '_pojo', desc = _ctx.desc, script = '';
                     if (desc) {
@@ -43,17 +49,20 @@ require('at-js').define('dao', {
                     }
                 }
             }, script: function () {
-                var mapping = '{' + columns.join(',') + '}';
-                return {
-                    exports: 'var _dao_mapping_ = '+mapping+',_dao_md_ = module.exports;module.exports = require(\''+LibName+'/lib/ds\').proxy(_dao_mapping_,_dao_md_)'
+                if (columns.length > 0) {
+                    return ';(function(){var a = module.exports,b = {name:"'+DefDSName+'",columns:{' + columns.join(',') + '}};' +
+                        'module.exports = require(\'' + LibName + '/lib/ds\').proxy(b,a);})();'
                 }
+                return null;
             }
         }
     }
 });
-
-module.exports = function (_cfg) {
-    require(LibName+'/lib/ds').initPool(_cfg);
+var ds = require(LibName + '/lib/ds');
+module.exports = {
+    start: function (_cfg) {
+        ds.initPool(_cfg);
+    }, shutdown: function*() {
+        yield ds.shutdown();
+    }
 };
-
-
