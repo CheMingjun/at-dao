@@ -3,4 +3,4 @@
  * Author: CheMingjun
  */
 require('at-dao');
-require('at-test')();
+require('at-test').run();
