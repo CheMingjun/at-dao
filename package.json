@@ -1,23 +1,31 @@
 {
-    "name": "at-dao",
-    "optionalDependencies": {},
-    "readme": "README.md",
-    "scripts": {},
-    "version": "1.0.7",
-    "dependencies": {
-        "at-js": ">=1.1.8",
-        "co": "4.6.0",
-        "mysql": "2.10.2"
-    },
-    "description": "readme.md",
-    "devDependencies": {
-        "at-test": ">=1.0.5"
-    },
-    "main": "./index",
-    "maintainers": [
-        {
-            "email": "chemingjun@126.com",
-            "name": "chemingjun"
-        }
-    ]
+  "name": "at-dao",
+  "keywords": [
+    "orm",
+    "dao",
+    "database",
+    "annotation"
+  ],
+  "scripts": {},
+  "version": "1.1.2",
+  "dependencies": {
+    "at-js": ">=1.1.8",
+    "co": "4.6.0",
+    "mysql": "2.10.2"
+  },
+  "description": "基于@Annotation的数据库 dao/orm 框架",
+  "devDependencies": {
+    "at-test": ">=1.0.5"
+  },
+  "main": "./index",
+  "maintainers": [
+    {
+      "email": "chemingjun@126.com",
+      "name": "chemingjun"
+    }
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.12.0"
+  }
 }
