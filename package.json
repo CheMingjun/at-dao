@@ -7,15 +7,15 @@
     "annotation"
   ],
   "scripts": {},
-  "version": "1.1.4",
+  "version": "1.1.6",
   "dependencies": {
-    "at-js": ">=1.1.8",
+    "at-js": ">=1.2.6",
     "co": "4.6.0",
     "mysql": "2.10.2"
   },
   "description": "基于@Annotation的数据库 dao/orm 框架",
   "devDependencies": {
-    "at-test": ">=1.0.5"
+    "at-test": ">=1.1.4"
   },
   "main": "./index",
   "maintainers": [

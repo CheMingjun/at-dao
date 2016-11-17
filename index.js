@@ -1,5 +1,4 @@
 /*!
- * 
  * Author: CheMingjun
  */
 'use strict';
@@ -13,38 +12,37 @@ require('at-js').define('dao.\\S+', {
         return {
             which: {
                 'dao.bat': function (_ctx, _argAry) {
-                    return "return require('" + LibName + "/lib/ds').bat.apply(null,Array.prototype.slice.call(arguments));";
+                    return "function(){return require('" + LibName + "/lib/ds').bat.apply(null,Array.prototype.slice.call(arguments));}";
                 },
                 'dao.column': function (_ctx, _argAry) {
-                    var paramName = '_pojo', desc = _ctx.desc, script = '';
+                    var paramName = '_pojo', desc = _ctx.desc, script = '',cNames = null;
                     if (desc) {
-                        var ts = desc['name'] || desc['names'];
-                        ts = ts.split(',');
-                        if (ts.length > 0) {
-                            ts.forEach(function (_nm) {
-                                script += ',' + paramName + '[\"' + _nm + '\"]';
-                            })
-                            script = script.substring(1);
-                        }
-                        if (_ctx.refType === 'function') {
-                            script = _ctx.refName + ':function(' + paramName + '){return ' + _ctx.refName + '(' + script + ');}';
-                        } else if (_ctx.refType === 'undefined') {
-                            if (ts.length > 1) {
-                                throw new Error('The column[' + _ctx.refName + '] should use only one database column.');
-                            }
-                            script = _ctx.refName + ':function(' + paramName + '){return ' + script + ';}';
-                        } else {
-                            throw new Error('The column[' + _ctx.refName + '] define error[should be a undefined or a function].');
-                        }
-                        columns.push(script);
-                    } else {
-                        throw new Error('The column[' + _ctx.refName + '] muse define name property in it\'s annotation.');
+                        cNames = desc['name'] || desc['names']||_ctx.refName;
                     }
+                    cNames = cNames||_ctx.refName;
+                    cNames = cNames.split(',');
+                    if (cNames.length > 0) {
+                        cNames.forEach(function (_nm) {
+                            script += ',' + paramName + '[\"' + _nm + '\"]';
+                        })
+                        script = script.substring(1);
+                    }
+                    if (_ctx.refType === 'function') {
+                        script = _ctx.refName + ':function(' + paramName + '){return ' + _ctx.refName + '(' + script + ');}';
+                    } else if (_ctx.refType === 'undefined') {
+                        if (cNames.length > 1) {
+                            throw new Error('The column[' + _ctx.refName + '] should use only one database column.');
+                        }
+                        script = _ctx.refName + ':function(' + paramName + '){return ' + script + ';}';
+                    } else {
+                        throw new Error('The column[' + _ctx.refName + '] define error[should be a undefined or a function].');
+                    }
+                    columns.push(script);
                 }
             }, script: function () {
                 if (columns.length > 0) {
-                    return ';(function(){var a = module.exports,b = {name:"'+DefDSName+'",columns:{' + columns.join(',') + '}};' +
-                        'module.exports = require(\'' + LibName + '/lib/ds\').proxy(b,a);})();'
+                    return 'var a = module.exports,b = {name:"'+DefDSName+'",columns:{' + columns.join(',') + '}};' +
+                        'module.exports = require(\'' + LibName + '/lib/ds\').proxy(b,a);'
                 }
                 return null;
             }
