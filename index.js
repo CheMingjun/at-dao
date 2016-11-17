@@ -55,7 +55,9 @@ var ds = require(LibName + '/lib/ds');
 module.exports = {
     start: function (_cfg) {
         ds.initPool(_cfg);
+        return this;
     }, shutdown: function*() {
         yield ds.shutdown();
+        return this;
     }
 };
