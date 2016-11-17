@@ -56,8 +56,12 @@ module.exports = {
     start: function (_cfg) {
         ds.initPool(_cfg);
         return this;
-    }, shutdown: function*() {
-        yield ds.shutdown();
+    }, shutdown: function(_cb) {
+        require('co')(ds.shutdown()).then(function (_rtn) {
+            typeof _cb==='function'?_cb(null,_rtn):null;
+        }, function (_e) {
+            typeof _cb==='function'?_cb(_e):null;
+        });
         return this;
     }
 };
