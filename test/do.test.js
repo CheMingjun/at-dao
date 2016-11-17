@@ -19,20 +19,46 @@ var start = function*() {
 }
 
 '@test.step';
+var initData = function*() {
+    yield doUser.mock100();
+}
+
+'@test.step';
 var queryAll = function*() {
     var users = yield doUser.queryAll();
-    assets(users);
-    assets.ok(users.length, 0, null, '>');
+    assets(users.length >= 100);
 }
+
+'@test.step';
+var update = function*() {
+    var rows = yield doUser.updateByName('tom----fool','tom%');
+    assets(rows >= 100);
+}
+
+'@test.step';
+var deleteJustBefore = function*() {
+    var rows = yield doUser.delNameLike('tom%');
+    assets(rows >= 100);
+}
+
+'@test.step';
+var addAUser = function*() {
+    var uid = yield doUser.insert('tom', 'tom cat');
+    assets(uid);
+}
+
+'@test.step';
+var queryById = function*() {
+    var user = yield doUser.queryById(2);
+    assets(user);
+}
+
 
 '@test.step';
 var transcation = function*() {
     yield daoBat([doUser], function*(_doUser) {
-        var th = this;
-
         var users = yield _doUser.queryAll();
-        assets(users);
-        assets.ok(users.length, 10, null, '>');
+        assets(users && users.length != 0);
     })
 }
 

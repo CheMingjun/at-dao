@@ -3,9 +3,9 @@
     "optionalDependencies": {},
     "readme": "README.md",
     "scripts": {},
-    "version": "1.0.6",
+    "version": "1.0.7",
     "dependencies": {
-        "at-js": "^1.1.8",
+        "at-js": ">=1.1.8",
         "co": "4.6.0",
         "mysql": "2.10.2"
     },

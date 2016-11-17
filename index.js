@@ -7,18 +7,11 @@
  * define a file annotations
  */
 const LibName = 'at-dao',DefDSName = 'default';
-require('at-js').define('dao', {
-    scope: 'var', build: function (_ctx, _argAry) {
-        return "return (typeof(_dao_)!=='undefined'?_dao:require('" + LibName + "/lib/ds').dao)(typeof(_dao_mapping_)==='object'?_dao_mapping_:null)";
-    }
-}).define('dao.\\S+', {
+require('at-js').define('dao.\\S+', {
     scope: 'file', build: function () {
         var columns = [];
         return {
             which: {
-                'dao.proxy': function (_ctx, _argAry) {
-                    return "return require('" + LibName + "/lib/ds').proxy(typeof(_dao_mapping_)==='object'?_dao_mapping_:null,arguments.length>0?arguments[0]:null);";
-                },
                 'dao.bat': function (_ctx, _argAry) {
                     return "return require('" + LibName + "/lib/ds').bat.apply(null,Array.prototype.slice.call(arguments));";
                 },
