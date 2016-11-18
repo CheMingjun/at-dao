@@ -7,9 +7,9 @@
     "annotation"
   ],
   "scripts": {},
-  "version": "1.1.7",
+  "version": "1.1.8",
   "dependencies": {
-    "at-js": ">=1.2.7",
+    "at-js": ">=1.2.8",
     "co": "4.6.0",
     "mysql": "2.10.2"
   },
